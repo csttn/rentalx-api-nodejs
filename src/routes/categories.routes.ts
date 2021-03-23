@@ -1,45 +1,53 @@
 import { Router } from 'express';
 
-import { CategoriesRepository } from '../repositories/CategoriesRepository';
+import { PostgresCategoriesRepository } from '../repositories/PostgresCategoriesRepository';
+import { CreateCategoryService } from '../services/CreateCategoryService';
+import { DeleteCategoryService } from '../services/DeleteCategoryService';
+import { FindByName } from '../services/FindByNameCategoryService';
+import { ListAllCategories } from '../services/ListCategoriesService';
 
 const categoriesRoutes = Router();
-const categoriesRepository = new CategoriesRepository();
 
+const categoriesRepository = new PostgresCategoriesRepository();
+
+//criando categoria
 categoriesRoutes.post('/', (request, response) => {
   const { name, description } = request.body;
 
-  const categoryAlreadyExists = categoriesRepository.findByName(name);
-  if (categoryAlreadyExists) {
-    return response.status(400).json({ error: 'Category name already Exists' });
-  }
+  const createCategoryService = new CreateCategoryService(categoriesRepository);
 
-  //criando categoria
-  categoriesRepository.create({ name, description });
+  const newCategory = createCategoryService.execute({ name, description });
 
-  return response.status(201).send();
+  return response.status(201).json(newCategory);
 });
 
 //listando categorias
 categoriesRoutes.get('/', (request, response) => {
-  const all = categoriesRepository.list();
+  const listAllCategories = new ListAllCategories(categoriesRepository);
 
-  return response.json(all);
+  const allCategories = listAllCategories.execute();
+
+  return response.json(allCategories);
 });
 
 //buscando categoria por name
-categoriesRoutes.get('/', (request, response) => {
+categoriesRoutes.get('/category', (request, response) => {
   const { name } = request.body;
 
-  const resp = categoriesRepository.findByName(name);
+  const findByName = new FindByName(categoriesRepository);
 
-  return response.json(resp);
+  const category = findByName.execute({ name });
+
+  return response.json(category);
 });
 
 //deletando categoria por name
 categoriesRoutes.delete('/', (request, response) => {
   const { name } = request.body;
 
-  categoriesRepository.delete(name);
+  const deleteCategoryService = new DeleteCategoryService(categoriesRepository);
+
+  deleteCategoryService.execute({ name });
 
   return response.send();
 });

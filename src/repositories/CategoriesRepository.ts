@@ -1,15 +1,13 @@
 import { Category } from '../model/Category';
+import {
+  ICategoriesRepository,
+  ICreateCategoryDTO,
+} from './ICategoriesRepository';
 
-// DTO = Data Transfer Object
-interface ICreateCategoryDTO {
-  name: string;
-  description: string;
-}
-
-class CategoriesRepository {
+class CategoriesRepository implements ICategoriesRepository {
   private categories: Category[];
 
-  create({ name, description }: ICreateCategoryDTO): void {
+  create({ name, description }: ICreateCategoryDTO): Category {
     const category = new Category();
 
     //criando objeto sem referenciar atributo por atributo
@@ -21,6 +19,8 @@ class CategoriesRepository {
     });
 
     this.categories.push(category);
+
+    return category;
   }
 
   list(): Category[] {
@@ -34,7 +34,11 @@ class CategoriesRepository {
   }
 
   delete(name: string): void {
-    this.categories.
+    const categoryIndex = this.categories.findIndex(
+      (item) => item.name === name
+    );
+
+    this.categories.splice(categoryIndex, 1);
   }
 
   constructor() {
