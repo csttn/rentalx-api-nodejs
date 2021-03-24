@@ -7,6 +7,20 @@ import {
 class CategoriesRepository implements ICategoriesRepository {
   private categories: Category[];
 
+  private constructor() {
+    this.categories = [];
+  }
+
+  private static INSTANCE: CategoriesRepository;
+
+  public static getInstance(): CategoriesRepository {
+    if (!CategoriesRepository.INSTANCE) {
+      return (CategoriesRepository.INSTANCE = new CategoriesRepository());
+    }
+
+    return CategoriesRepository.INSTANCE;
+  }
+
   create({ name, description }: ICreateCategoryDTO): Category {
     const category = new Category();
 
@@ -39,10 +53,6 @@ class CategoriesRepository implements ICategoriesRepository {
     );
 
     this.categories.splice(categoryIndex, 1);
-  }
-
-  constructor() {
-    this.categories = [];
   }
 }
 

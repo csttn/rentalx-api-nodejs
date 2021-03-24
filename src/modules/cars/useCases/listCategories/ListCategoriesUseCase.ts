@@ -1,7 +1,7 @@
-import { Category } from '../model/Category';
-import { ICategoriesRepository } from '../repositories/ICategoriesRepository';
+import { Category } from '../../model/Category';
+import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
-class ListAllCategories {
+class ListCategoriesUseCase {
   private categoriesRepository: ICategoriesRepository;
 
   constructor(categoriesRepository: ICategoriesRepository) {
@@ -16,4 +16,4 @@ class ListAllCategories {
   }
 }
 
-export { ListAllCategories };
+export { ListCategoriesUseCase };

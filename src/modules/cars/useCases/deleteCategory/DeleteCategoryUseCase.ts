@@ -1,10 +1,10 @@
-import { ICategoriesRepository } from '../repositories/ICategoriesRepository';
+import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
 interface IRequest {
   name: string;
 }
 
-class DeleteCategoryService {
+class DeleteCategoryUseCase {
   private categoriesRepository: ICategoriesRepository;
 
   constructor(categoriesRepository: ICategoriesRepository) {
@@ -22,4 +22,4 @@ class DeleteCategoryService {
   }
 }
 
-export { DeleteCategoryService };
+export { DeleteCategoryUseCase };
