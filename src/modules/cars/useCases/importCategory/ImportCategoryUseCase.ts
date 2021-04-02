@@ -25,12 +25,15 @@ class ImportCategoryUseCase {
 
       stream.pipe(parseFile);
 
+      // extraindo as informações do arquivo .csv
       parseFile
         .on('data', async (line) => {
           const [name, description] = line;
           categories.push({ name, description });
         })
         .on('end', () => {
+          //apagando arquivo da pasta tmp depois de ler e armazenar as informações
+          fs.promises.unlink(file.path);
           resolve(categories);
         })
         .on('error', (err) => {
