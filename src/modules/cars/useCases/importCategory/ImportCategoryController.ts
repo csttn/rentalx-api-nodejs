@@ -8,10 +8,10 @@ class ImportCategoryController {
     this.importCategoryUseCase = importCategoryUseCase;
   }
 
-  handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response) {
     const { file } = request;
 
-    this.importCategoryUseCase.execute(file);
+    await this.importCategoryUseCase.execute(file);
     return response.send();
   }
 }

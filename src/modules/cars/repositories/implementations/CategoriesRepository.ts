@@ -1,58 +1,40 @@
-import { Category } from '../../model/Category';
+import { getRepository, Repository } from 'typeorm';
+import { Category } from '../../entities/Category';
 import {
   ICategoriesRepository,
   ICreateCategoryDTO,
 } from '../ICategoriesRepository';
 
 class CategoriesRepository implements ICategoriesRepository {
-  private categories: Category[];
+  private repository: Repository<Category>;
 
-  private constructor() {
-    this.categories = [];
+  constructor() {
+    this.repository = getRepository(Category);
   }
 
-  private static INSTANCE: CategoriesRepository;
-
-  public static getInstance(): CategoriesRepository {
-    if (!CategoriesRepository.INSTANCE) {
-      return (CategoriesRepository.INSTANCE = new CategoriesRepository());
-    }
-
-    return CategoriesRepository.INSTANCE;
-  }
-
-  create({ name, description }: ICreateCategoryDTO): Category {
-    const category = new Category();
-
-    //criando objeto sem referenciar atributo por atributo
-    //utilizando o metodo assign, que copia os valores para um obj (no caso o category)
-    Object.assign(category, {
-      name,
+  async create({ name, description }: ICreateCategoryDTO): Promise<void> {
+    const category = this.repository.create({
       description,
-      created_at: new Date(),
+      name,
     });
 
-    this.categories.push(category);
+    await this.repository.save(category);
+  }
+
+  async list(): Promise<Category[]> {
+    const categories = await this.repository.find();
+
+    return categories;
+  }
+
+  async findByName(name: string): Promise<Category> {
+    const category = await this.repository.findOne({ name });
 
     return category;
   }
 
-  list(): Category[] {
-    return this.categories;
-  }
-
-  findByName(name: string): Category {
-    const category = this.categories.find((item) => item.name === name);
-
-    return category;
-  }
-
-  delete(name: string): void {
-    const categoryIndex = this.categories.findIndex(
-      (item) => item.name === name
-    );
-
-    this.categories.splice(categoryIndex, 1);
+  async delete(name: string): Promise<void> {
+    await this.repository.delete({ name });
   }
 }
 

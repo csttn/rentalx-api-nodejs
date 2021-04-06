@@ -8,15 +8,15 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=ignite
-      - POSTGRES_DB=rentx
+      - POSTGRES_USER=rentalx
+      - POSTGRES_PASSWORD=rentalx
+      - POSTGRES_DB=rentalx_db_postgres
     volumes:
       - pgdata:/data/postgres
 
   app:
     build: .
-    container_name: rentx
+    container_name: rentalx-api
     restart: always
     ports:
       - 3333:3333

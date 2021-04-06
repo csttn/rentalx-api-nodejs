@@ -9,10 +9,10 @@ class DeleteCategoryController {
     this.deleteCategoryUseCase = deleteCategoryUseCase;
   }
 
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { name } = request.body;
 
-    this.deleteCategoryUseCase.execute({ name });
+    await this.deleteCategoryUseCase.execute({ name });
 
     return response.send();
   }

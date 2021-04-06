@@ -12,13 +12,13 @@ class DeleteCategoryUseCase {
     this.categoriesRepository = categoriesRepository;
   }
 
-  execute({ name }: IRequest) {
-    const categoryNotExists = this.categoriesRepository.findByName(name);
+  async execute({ name }: IRequest) {
+    const categoryNotExists = await this.categoriesRepository.findByName(name);
     if (!categoryNotExists) {
       throw new Error('Category is not exists');
     }
 
-    this.categoriesRepository.delete(name);
+    await this.categoriesRepository.delete(name);
   }
 }
 
