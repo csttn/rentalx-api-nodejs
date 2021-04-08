@@ -1,16 +1,16 @@
+import { inject, injectable } from 'tsyringe';
 import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
 interface IRequest {
   name: string;
 }
 
+@injectable()
 class DeleteCategoryUseCase {
-  private categoriesRepository: ICategoriesRepository;
-
-  constructor(categoriesRepository: ICategoriesRepository) {
-    //atribuindo valor que sera recebido pelo construtor a variavel privada categoriesRepository
-    this.categoriesRepository = categoriesRepository;
-  }
+  constructor(
+    @inject('CategoriesRepository')
+    private categoriesRepository: ICategoriesRepository
+  ) {}
 
   async execute({ name }: IRequest) {
     const categoryNotExists = await this.categoriesRepository.findByName(name);

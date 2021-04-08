@@ -1,40 +1,42 @@
 import { getRepository, Repository } from 'typeorm';
-import { Category } from '../../entities/Category';
+
 import {
   ICategoriesRepository,
   ICreateCategoryDTO,
 } from '../ICategoriesRepository';
 
-class CategoriesRepository implements ICategoriesRepository {
-  private repository: Repository<Category>;
+import { Category } from '../../entities/Category';
 
+class CategoriesRepository implements ICategoriesRepository {
+  private repositoryCategory: Repository<Category>;
   constructor() {
-    this.repository = getRepository(Category);
+    this.repositoryCategory = getRepository(Category);
+  }
+
+  async list(): Promise<Category[]> {
+    const all = await this.repositoryCategory.find();
+
+    return all;
   }
 
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
-    const category = this.repository.create({
+    const category = this.repositoryCategory.create({
       description,
       name,
     });
 
-    await this.repository.save(category);
-  }
-
-  async list(): Promise<Category[]> {
-    const categories = await this.repository.find();
-
-    return categories;
+    await this.repositoryCategory.save(category);
   }
 
   async findByName(name: string): Promise<Category> {
-    const category = await this.repository.findOne({ name });
-
+    const category = await this.repositoryCategory.findOne({
+      name,
+    });
     return category;
   }
 
   async delete(name: string): Promise<void> {
-    await this.repository.delete({ name });
+    await this.repositoryCategory.delete({ name });
   }
 }
 

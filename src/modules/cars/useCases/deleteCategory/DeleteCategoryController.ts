@@ -1,18 +1,15 @@
 import { Request, Response } from 'express';
 
 import { DeleteCategoryUseCase } from './DeleteCategoryUseCase';
+import { container } from 'tsyringe';
 
 class DeleteCategoryController {
-  private deleteCategoryUseCase: DeleteCategoryUseCase;
-
-  constructor(deleteCategoryUseCase: DeleteCategoryUseCase) {
-    this.deleteCategoryUseCase = deleteCategoryUseCase;
-  }
-
   async handle(request: Request, response: Response): Promise<Response> {
     const { name } = request.body;
 
-    await this.deleteCategoryUseCase.execute({ name });
+    const deleteCategoryUseCase = container.resolve(DeleteCategoryUseCase);
+
+    deleteCategoryUseCase.execute({ name });
 
     return response.send();
   }
