@@ -8,35 +8,35 @@ import {
 import { Category } from '../../entities/Category';
 
 class CategoriesRepository implements ICategoriesRepository {
-  private repositoryCategory: Repository<Category>;
+  private repository: Repository<Category>;
   constructor() {
-    this.repositoryCategory = getRepository(Category);
+    this.repository = getRepository(Category);
   }
 
   async list(): Promise<Category[]> {
-    const all = await this.repositoryCategory.find();
+    const all = await this.repository.find();
 
     return all;
   }
 
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
-    const category = this.repositoryCategory.create({
+    const category = this.repository.create({
       description,
       name,
     });
 
-    await this.repositoryCategory.save(category);
+    await this.repository.save(category);
   }
 
   async findByName(name: string): Promise<Category> {
-    const category = await this.repositoryCategory.findOne({
+    const category = await this.repository.findOne({
       name,
     });
     return category;
   }
 
   async delete(name: string): Promise<void> {
-    await this.repositoryCategory.delete({ name });
+    await this.repository.delete({ name });
   }
 }
 
