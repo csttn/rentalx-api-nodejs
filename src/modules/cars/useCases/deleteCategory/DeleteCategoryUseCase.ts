@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
+import { AppError } from '../../../../errors/AppError';
 
 interface IRequest {
   name: string;
@@ -15,7 +16,7 @@ class DeleteCategoryUseCase {
   async execute({ name }: IRequest) {
     const categoryNotExists = await this.categoriesRepository.findByName(name);
     if (!categoryNotExists) {
-      throw new Error('Category is not exists');
+      throw new AppError('Category is not exists');
     }
 
     await this.categoriesRepository.delete(name);

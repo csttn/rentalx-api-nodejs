@@ -9,7 +9,7 @@ class DeleteCategoryController {
 
     const deleteCategoryUseCase = container.resolve(DeleteCategoryUseCase);
 
-    deleteCategoryUseCase.execute({ name });
+    await deleteCategoryUseCase.execute({ name });
 
     return response.send();
   }
