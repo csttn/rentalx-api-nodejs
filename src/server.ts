@@ -1,22 +1,33 @@
 import express, { Request, Response, NextFunction } from 'express';
+
+//biblioteca do express para trataemnto de erros
 import 'express-async-errors';
 
+//documentação
 import swaggerUi from 'swagger-ui-express';
 import swaggerFile from './swagger.json';
 
+//classe para tratamento de erros
+import { AppError } from './errors/AppError';
+
+// typeOrm
 import './database';
 
+// intermediario, para abstrair acoplamento e seguir padrão singleton, entregando sempre a mesma instancia criada.
 import './shared/container';
 
+//rota indice
 import { router } from './routes';
-import { AppError } from './errors/AppError';
 
 const app = express();
 
+// atribuindo formato json ao express
 app.use(express.json());
 
+//criando rota de documentação
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
+//atribuindo rotas de recursos da aplicação
 app.use(router);
 
 //middlewares para tratamento de erro
