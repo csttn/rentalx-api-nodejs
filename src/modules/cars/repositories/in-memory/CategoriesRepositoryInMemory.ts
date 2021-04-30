@@ -1,0 +1,33 @@
+import { v4 as uuidV4 } from 'uuid';
+
+import { Category } from '../../entities/Category';
+import {
+  ICategoriesRepository,
+  ICreateCategoryDTO,
+} from '../ICategoriesRepository';
+
+class CategoriesRepositoryInMemory implements ICategoriesRepository {
+  categories: Category[] = [];
+
+  async findByName(name: string): Promise<Category> {
+    const category = this.categories.find((category) => category.name === name);
+
+    return category;
+  }
+  async create({ name, description }: ICreateCategoryDTO): Promise<void> {
+    const category = {
+      name,
+      description,
+      created_at: new Date(),
+      id: uuidV4(),
+    };
+
+    this.categories.push(category);
+  }
+  async delete(name: string): Promise<void> {}
+  async list(): Promise<Category[]> {
+    throw new Error('Method not implemented.');
+  }
+}
+
+export { CategoriesRepositoryInMemory };
