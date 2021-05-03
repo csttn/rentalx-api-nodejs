@@ -1,5 +1,6 @@
 import { CategoriesRepositoryInMemory } from '../../repositories/in-memory/CategoriesRepositoryInMemory';
 import { CreateCategoryUseCase } from './CreateCategoryUseCase';
+import { AppError } from '../../../../errors/AppError';
 
 let createCategoryUseCase: CreateCategoryUseCase;
 let categoriesRepositoryInMemory: CategoriesRepositoryInMemory;
@@ -14,7 +15,7 @@ describe('Create Category', () => {
 
   it('should be able to create a new category', async () => {
     const category = {
-      name: 'Category Test',
+      name: 'Nome',
       description: 'Desc',
     };
     await createCategoryUseCase.execute({
@@ -22,8 +23,27 @@ describe('Create Category', () => {
       description: category.description,
     });
 
-    const result = await categoriesRepositoryInMemory.findByName(category.name);
+    const categoryCreated = await categoriesRepositoryInMemory.findByName(
+      category.name
+    );
 
-    expect(result).toHaveProperty('id');
+    expect(categoryCreated).toHaveProperty('id');
+  });
+
+  it('should not be able to create a new category with the existing name', async () => {
+    expect(async () => {
+      const category = {
+        name: 'Nome',
+        description: 'Desc',
+      };
+      await createCategoryUseCase.execute({
+        name: category.name,
+        description: category.description,
+      });
+      await createCategoryUseCase.execute({
+        name: category.name,
+        description: category.description,
+      });
+    }).rejects.toBeInstanceOf(AppError);
   });
 });

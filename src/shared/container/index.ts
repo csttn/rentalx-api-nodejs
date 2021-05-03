@@ -6,6 +6,7 @@ import { CategoriesRepository } from '../../modules/cars/repositories/implementa
 import { SpecificationRepository } from '../../modules/cars/repositories/implementations/SpecificationRepository';
 import { ISpecificationRepository } from '../../modules/cars/repositories/ISpecificationsRepository';
 
+import 'reflect-metadata';
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
   CategoriesRepository

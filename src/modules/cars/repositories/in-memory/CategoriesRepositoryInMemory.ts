@@ -15,18 +15,24 @@ class CategoriesRepositoryInMemory implements ICategoriesRepository {
     return category;
   }
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
-    const category = {
+    const category = new Category();
+
+    Object.assign(category, {
       name,
       description,
-      created_at: new Date(),
-      id: uuidV4(),
-    };
-
+    });
     this.categories.push(category);
   }
-  async delete(name: string): Promise<void> {}
+  async delete(name: string): Promise<void> {
+    const categoryIndex = this.categories.findIndex(
+      (category) => category.name === name
+    );
+
+    this.categories.splice(categoryIndex, 1);
+  }
   async list(): Promise<Category[]> {
-    throw new Error('Method not implemented.');
+    const all = this.categories;
+    return all;
   }
 }
 
