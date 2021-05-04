@@ -6,19 +6,19 @@ import 'express-async-errors';
 
 //documentação
 import swaggerUi from 'swagger-ui-express';
-import swaggerFile from './swagger.json';
+import swaggerFile from '../../../swagger.json';
 
 //classe para tratamento de erros
-import { AppError } from '@errors/AppError';
 
 // typeOrm
-import './database';
+import '@shared/infra/typeorm';
 
 // intermediario, para abstrair acoplamento e seguir padrão singleton, entregando sempre a mesma instancia criada.
 import '@shared/container';
 
 //rota indice
-import { router } from './routes';
+import { router } from '@shared/infra/http/routes';
+import { AppError } from '@errors/AppError';
 
 const app = express();
 

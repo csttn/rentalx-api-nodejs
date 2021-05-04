@@ -2,7 +2,7 @@ import {
   ICreateSpecificationDTO,
   ISpecificationRepository,
 } from '@modules/cars/repositories/ISpecificationsRepository';
-import { Specification } from '@modules/cars/entities/Specification';
+import { Specification } from '@modules/cars/infra/typeorm/entities/Specification';
 import { Repository, getRepository } from 'typeorm';
 
 class SpecificationRepository implements ISpecificationRepository {

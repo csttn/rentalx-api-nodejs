@@ -8,8 +8,8 @@
       "@modules/*": ["modules/*"],
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"],
-      "@middlewares/*": ["middlewares/*"],
-      "@errors/*": ["errors/*"],
+      "@middlewares/*": ["shared/infra/http/middlewares/*"],
+      "@errors/*": ["shared/errors/*"],
       "@utils/*": ["utils/*"]
     },
     "esModuleInterop": true,
