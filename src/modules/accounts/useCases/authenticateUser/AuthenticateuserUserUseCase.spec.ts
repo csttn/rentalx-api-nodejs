@@ -1,6 +1,6 @@
-import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
-import { CreateUserUseCase } from '../createUser/CreateUserUseCase';
-import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
+import { UsersRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersRepositoryInMemory';
+import { CreateUserUseCase } from '@modules/accounts/useCases/createUser/CreateUserUseCase';
+import { AuthenticateUserUseCase } from '@modules/accounts/useCases/authenticateUser/AuthenticateUserUseCase';
 import { AppError } from '@errors/AppError';
 
 //serviços para testar

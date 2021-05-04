@@ -7,4 +7,4 @@ interface IUsersRepository {
   findById(user_id: string): Promise<User>;
 }
 
-export { IUsersRepository, ICreateUserDTO };
+export { IUsersRepository };
