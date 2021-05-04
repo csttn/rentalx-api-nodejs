@@ -27,10 +27,12 @@ describe('Create Category', () => {
       category.name
     );
 
+    // esperando que tenha uma propriedade id apos ser criada
     expect(categoryCreated).toHaveProperty('id');
   });
 
   it('should not be able to create a new category with the existing name', async () => {
+    //esperando um erro retornando que seja da isntacia do AppError
     expect(async () => {
       const category = {
         name: 'Nome',
