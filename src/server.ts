@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import express, { Request, Response, NextFunction } from 'express';
 
 //biblioteca do express para trataemnto de erros
@@ -8,13 +9,13 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerFile from './swagger.json';
 
 //classe para tratamento de erros
-import { AppError } from './errors/AppError';
+import { AppError } from '@errors/AppError';
 
 // typeOrm
 import './database';
 
 // intermediario, para abstrair acoplamento e seguir padrão singleton, entregando sempre a mesma instancia criada.
-import './shared/container';
+import '@shared/container';
 
 //rota indice
 import { router } from './routes';

@@ -1,7 +1,8 @@
+import { AppError } from '@errors/AppError';
+import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
 import { UsersRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersRepositoryInMemory';
 import { CreateUserUseCase } from '@modules/accounts/useCases/createUser/CreateUserUseCase';
 import { AuthenticateUserUseCase } from '@modules/accounts/useCases/authenticateUser/AuthenticateUserUseCase';
-import { AppError } from '@errors/AppError';
 
 //serviços para testar
 let authenticatedUserUseCase: AuthenticateUserUseCase;
@@ -20,12 +21,13 @@ describe('AuthenticatedUser', () => {
   });
 
   it('should be able to authenticate an user', async () => {
-    const user = {
+    const user: ICreateUserDTO = {
       name: 'nome',
       password: 'senha',
       email: 'email',
       driver_license: 'cnh',
     };
+
     await createUserUseCase.execute(user);
 
     const result = await authenticatedUserUseCase.execute({
@@ -39,7 +41,7 @@ describe('AuthenticatedUser', () => {
   it('must be able to return an error after the password is incorrect', () => {
     //esperando erro de autenticação
     expect(async () => {
-      const user = {
+      const user: ICreateUserDTO = {
         name: 'nome',
         password: 'senha',
         email: 'email',
@@ -56,7 +58,7 @@ describe('AuthenticatedUser', () => {
   it('must be able to return an error after the email is incorrect', () => {
     //esperando erro de autenticação
     expect(async () => {
-      const user = {
+      const user: ICreateUserDTO = {
         name: 'nome',
         password: 'senha',
         email: 'email',
