@@ -4,6 +4,8 @@ import express, { Request, Response, NextFunction } from 'express';
 //biblioteca do express para trataemnto de erros
 import 'express-async-errors';
 
+import createConnection from '@shared/infra/typeorm';
+
 //documentação
 import swaggerUi from 'swagger-ui-express';
 import swaggerFile from '../../../swagger.json';
@@ -11,7 +13,7 @@ import swaggerFile from '../../../swagger.json';
 //classe para tratamento de erros
 
 // typeOrm
-import '@shared/infra/typeorm';
+createConnection();
 
 // intermediario, para abstrair acoplamento e seguir padrão singleton, entregando sempre a mesma instancia criada.
 import '@shared/container';

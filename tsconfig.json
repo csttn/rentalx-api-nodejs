@@ -5,12 +5,12 @@
     "rootDir": "./",
     "baseUrl": "./src",
     "paths": {
-      "@modules/*": ["modules/*"],
       "@config/*": ["config/*"],
+      "@modules/*": ["modules/*"],
       "@shared/*": ["shared/*"],
       "@middlewares/*": ["shared/infra/http/middlewares/*"],
-      "@errors/*": ["shared/errors/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@errors/*": ["shared/errors/*"]
     },
     "esModuleInterop": true,
     "experimentalDecorators": true,

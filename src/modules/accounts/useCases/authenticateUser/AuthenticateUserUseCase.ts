@@ -43,7 +43,7 @@ class AuthenticateUserUseCase {
     }
 
     //gerando jwt
-    const token = sign({}, '484f1c5d540e55294143e3d476346509', {
+    const token = sign({}, process.env.SECRET_JWT, {
       subject: user.id,
       expiresIn: '1d',
     });
