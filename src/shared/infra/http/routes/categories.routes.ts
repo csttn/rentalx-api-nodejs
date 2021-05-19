@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { CreateCategoryController } from '@modules/cars/useCases/createCategory/CreateCategoryController';
 import { DeleteCategoryController } from '@modules/cars/useCases/deleteCategory/DeleteCategoryController';
 import { ImportCategoryController } from '@modules/cars/useCases/importCategory/ImportCategoryController';
-import { ListCategoriesController } from '@modules/cars/useCases/listCategories/listCategoriesController';
+import { ListCategoriesController } from '@modules/cars/useCases/listCategories/ListCategoriesController';
 
 import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
 import { ensureAdmin } from '@middlewares/ensureAdmin';
