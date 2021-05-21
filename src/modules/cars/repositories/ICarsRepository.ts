@@ -5,6 +5,7 @@ import { IFindAvailableDTO } from '../dto/IFindAvailableDTO';
 interface ICarsRepository {
   create(data: ICreateCarDTO): Promise<Car>;
   findByLicensePlate(license_plate: string): Promise<Car>;
+  findById(car_id: string): Promise<Car>;
   findAvailable(data: IFindAvailableDTO): Promise<Car[]>;
 }
 
