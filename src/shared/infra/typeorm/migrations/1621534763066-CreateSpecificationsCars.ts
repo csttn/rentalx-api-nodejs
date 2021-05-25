@@ -5,7 +5,7 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class CreateSpecificationsCars1621534763066
+export class CreateSpecificationsCars1617572508811
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -29,12 +29,10 @@ export class CreateSpecificationsCars1621534763066
       })
     );
 
-    // adicionando chaves estrangeiras da tabela associativa
-
     await queryRunner.createForeignKey(
       'specifications_cars',
       new TableForeignKey({
-        name: 'FK_Specification_Car',
+        name: 'FKSpecificationCar',
         referencedTableName: 'specifications',
         referencedColumnNames: ['id'],
         columnNames: ['specification_id'],
@@ -46,7 +44,7 @@ export class CreateSpecificationsCars1621534763066
     await queryRunner.createForeignKey(
       'specifications_cars',
       new TableForeignKey({
-        name: 'FK_Car_Specifications',
+        name: 'FKCarSpecification',
         referencedTableName: 'cars',
         referencedColumnNames: ['id'],
         columnNames: ['car_id'],
@@ -59,11 +57,12 @@ export class CreateSpecificationsCars1621534763066
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropForeignKey(
       'specifications_cars',
-      'FK_Specification_Car'
+      'FKCarSpecification'
     );
+
     await queryRunner.dropForeignKey(
       'specifications_cars',
-      'FK_Car_Specifications'
+      'FKSpecificationCar'
     );
 
     await queryRunner.dropTable('specifications_cars');

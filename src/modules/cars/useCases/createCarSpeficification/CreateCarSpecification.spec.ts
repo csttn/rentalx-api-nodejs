@@ -20,7 +20,7 @@ describe('Create Car Specification', () => {
   it('should be able to add a new specification to a now-existent the car', async () => {
     expect(async () => {
       const car_id = '2123123';
-      const specifications_id = ['sdfsdfs'];
+      const specifications_id = ['23423'];
 
       await createSpecificationCarUseCase.execute({
         car_id,
@@ -54,34 +54,13 @@ describe('Create Car Specification', () => {
     //criando array com ids de especificações criadas
     const specifications_id = [spec.id, spec2.id];
 
-    //adicionando especificações criadas ao carro criado
-    await createSpecificationCarUseCase.execute({
+    // adicionando especificações criadas ao carro criado
+    const specificationsCar = await createSpecificationCarUseCase.execute({
       car_id: car.id,
       specifications_id,
     });
-  });
 
-  it('should not be able to add a specification that was not created to the car', () => {
-    expect(async () => {
-      // criando carro
-      const car = await carsRepositoryInMemory.create({
-        brand: 'Brand',
-        category_id: 'category_id',
-        daily_rate: 100,
-        description: 'Description car',
-        fine_amount: 60,
-        license_plate: 'ABC',
-        name: 'name Car',
-      });
-
-      //criando array com ids de especificações que não existem
-      const specifications_id = ['sdfsfds'];
-
-      //adicionando especificações criadas ao carro criado
-      await createSpecificationCarUseCase.execute({
-        car_id: car.id,
-        specifications_id,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+    expect(specificationsCar).toHaveProperty('specifications');
+    expect(specificationsCar.specifications.length).toBe(2);
   });
 });
