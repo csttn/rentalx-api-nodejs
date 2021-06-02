@@ -1,6 +1,9 @@
 import { IRentalsRepository } from '@modules/rentals/repositories/IRentalsRepository';
 import { Rental } from '../entities/Rental';
 import { Repository, getRepository } from 'typeorm';
+import { ICreateRentalDTO } from '@modules/rentals/dto/ICreateRentalDTO';
+
+import { v4 as uuidV4 } from 'uuid';
 
 class RentalsRepository implements IRentalsRepository {
   private repository: Repository<Rental>;
@@ -16,12 +19,20 @@ class RentalsRepository implements IRentalsRepository {
     return await this.repository.findOne({ user_id });
   }
 
-  create(
-    car_id: string,
-    user_id: string,
-    expected_return_date: Date
-  ): Promise<Rental> {
-    throw new Error('Method not implemented.');
+  async create({
+    car_id,
+    user_id,
+    expected_return_date,
+  }: ICreateRentalDTO): Promise<Rental> {
+    const rental = this.repository.create({
+      expected_return_date,
+      car_id,
+      user_id,
+    });
+
+    await this.repository.save(rental);
+
+    return rental;
   }
 }
 

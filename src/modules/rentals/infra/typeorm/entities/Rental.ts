@@ -5,41 +5,44 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Car } from '@modules/cars/infra/typeorm/entities/Car';
 import { User } from '@modules/accounts/infra/typeorm/entities/User';
 
 import { v4 as uuidV4 } from 'uuid';
 
-// @Entity('rentals')
+@Entity('rentals')
 class Rental {
-  // @PrimaryColumn()
+  @PrimaryColumn()
   id: string;
 
   // @OneToOne(() => Car)
   // @JoinColumn({ name: 'car_id' })
+  @Column()
   car_id: string;
 
   // @OneToOne(() => User)
   // @JoinColumn({ name: 'user_id' })
+  @Column()
   user_id: string;
 
-  // @CreateDateColumn()
+  @Column()
   start_date: Date;
 
-  // @CreateDateColumn()
+  @Column()
   end_date: Date;
 
-  // @CreateDateColumn()
-  expected_return_date: string;
+  @Column()
+  expected_return_date: Date;
 
-  // @Column()
+  @Column()
   total: number;
 
-  // @CreateDateColumn()
+  @CreateDateColumn()
   created_at: Date;
 
-  // @CreateDateColumn()
+  @UpdateDateColumn()
   updated_at: Date;
 
   constructor() {

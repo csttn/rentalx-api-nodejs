@@ -13,6 +13,8 @@ import { CarsImagesRepository } from '@modules/cars/infra/typeorm/repositories/C
 import { IRentalsRepository } from '@modules/rentals/repositories/IRentalsRepository';
 import { RentalsRepository } from '@modules/rentals/infra/typeorm/repositories/RentalsRepository';
 
+import '@shared/container/providers';
+
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
   CategoriesRepository
