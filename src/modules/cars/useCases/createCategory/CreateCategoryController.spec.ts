@@ -10,23 +10,21 @@ import createConnection from '@shared/infra/typeorm';
 let connection: Connection;
 
 describe('Create Category Controller', () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     connection = await createConnection();
 
-    await connection.synchronize(true);
-
-    // await connection.runMigrations();
+    await connection.runMigrations();
 
     const id = uuidV4();
     const password = await hash('admin', 8);
 
-    await connection.query(`INSERT INTO USERS (id, name, email, password, "isAdmin", created_at, driver_license,avatar)
-    values ('${id}', 'admin', 'admin@rentx.com.br', '${password}', 'true', 'now()', 'XXXXX', "avatar")
+    await connection.query(`INSERT INTO USERS (id, name, email, password, "isAdmin", created_at, driver_license)
+    values ('${id}', 'admin', 'admin@rentx.com.br', '${password}', 'true', 'now()', 'XXXXX')
     `);
   });
 
   afterAll(async () => {
-    // await connection.dropDatabase();
+    await connection.dropDatabase();
     await connection.close();
   });
 
@@ -35,6 +33,19 @@ describe('Create Category Controller', () => {
       email: 'admin@rentx.com.br',
       password: 'admin',
     });
-    console.log(responseToken.body);
+
+    const { token } = responseToken.body;
+
+    const response = await request(app)
+      .post('/categories')
+      .send({
+        name: 'categoria dos deuses',
+        description: 'descrição dos deuses',
+      })
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
+
+    expect(response.statusCode).toBe(201);
   });
 });
