@@ -48,4 +48,49 @@ describe('Create Category Controller', () => {
 
     expect(response.statusCode).toBe(201);
   });
+  it('should not able to create a new category with name exists', async () => {
+    const responseToken = await request(app).post('/sessions').send({
+      email: 'admin@rentx.com.br',
+      password: 'admin',
+    });
+
+    const { token } = responseToken.body;
+    await request(app)
+      .post('/categories')
+      .send({
+        name: 'categoria dos deuses',
+        description: 'descrição dos deuses',
+      })
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
+
+    const response = await request(app)
+      .post('/categories')
+      .send({
+        name: 'categoria dos deuses',
+        description: 'descrição dos deuses',
+      })
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
+    expect(response.statusCode).toBe(400);
+  });
+
+  it('should be able list all categories', async () => {
+    const responseToken = await request(app).post('/sessions').send({
+      email: 'admin@rentx.com.br',
+      password: 'admin',
+    });
+
+    const { token } = responseToken.body;
+
+    const response = await request(app)
+      .get('/categories')
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
+
+    expect(response.statusCode).toBe(200);
+  });
 });
