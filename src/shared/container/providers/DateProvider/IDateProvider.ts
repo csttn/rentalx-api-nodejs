@@ -5,6 +5,7 @@ interface IDateProvider {
   convertToUTC(date: Date): string;
   dateNow(): Date;
   addTimeToDate(value: number, type: dayjs.OpUnitType): Date;
+  compareInDays(start_date: Date, end_date: Date): number;
 }
 
 export { IDateProvider };
