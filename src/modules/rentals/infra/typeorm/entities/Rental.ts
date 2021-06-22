@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
@@ -17,13 +18,13 @@ class Rental {
   @PrimaryColumn()
   id: string;
 
-  // @OneToOne(() => Car)
-  // @JoinColumn({ name: 'car_id' })
+  @ManyToOne(() => Car)
+  @JoinColumn({ name: 'car_id' })
+  car: Car;
+
   @Column()
   car_id: string;
 
-  // @OneToOne(() => User)
-  // @JoinColumn({ name: 'user_id' })
   @Column()
   user_id: string;
 
