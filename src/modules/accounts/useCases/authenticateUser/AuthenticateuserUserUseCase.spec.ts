@@ -38,48 +38,49 @@ describe('AuthenticatedUser', () => {
     expect(result).toHaveProperty('token');
   });
 
-  it('must be able to return an error after the password is incorrect', () => {
+  it('must be able to return an error after the password is incorrect', async () => {
     //esperando erro de autenticação
-    expect(async () => {
-      const user: ICreateUserDTO = {
-        name: 'nome',
-        password: 'senha',
-        email: 'email',
-        driver_license: 'cnh',
-      };
-      await createUserUseCase.execute(user);
+    const user: ICreateUserDTO = {
+      name: 'nome',
+      password: 'senha',
+      email: 'email',
+      driver_license: 'cnh',
+    };
+    await createUserUseCase.execute(user);
 
-      await authenticatedUserUseCase.execute({
+    await expect(
+      authenticatedUserUseCase.execute({
         email: user.email,
         password: 'incorrect Password',
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError('Email or password incorrect!'));
   });
-  it('must be able to return an error after the email is incorrect', () => {
-    //esperando erro de autenticação
-    expect(async () => {
-      const user: ICreateUserDTO = {
-        name: 'nome',
-        password: 'senha',
-        email: 'email',
-        driver_license: 'cnh',
-      };
-      await createUserUseCase.execute(user);
 
-      await authenticatedUserUseCase.execute({
+  it('must be able to return an error after the email is incorrect', async () => {
+    //esperando erro de autenticação
+    const user: ICreateUserDTO = {
+      name: 'nome',
+      password: 'senha',
+      email: 'email',
+      driver_license: 'cnh',
+    };
+    await createUserUseCase.execute(user);
+
+    await expect(
+      authenticatedUserUseCase.execute({
         email: 'email incorrect',
         password: user.password,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError('Email or password incorrect!'));
   });
 
-  it('should be able to authenticated an nonexistent user', () => {
+  it('should be able to authenticated an nonexistent user', async () => {
     //esperando erro de autenticação
-    expect(async () => {
-      await authenticatedUserUseCase.execute({
+    await expect(
+      authenticatedUserUseCase.execute({
         email: 'email incorrect',
         password: 'password incorrect',
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError('Email or password incorrect!'));
   });
 });
