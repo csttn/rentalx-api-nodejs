@@ -6,6 +6,7 @@ interface IDateProvider {
   dateNow(): Date;
   addTimeToDate(value: number, type: dayjs.OpUnitType): Date;
   compareInDays(start_date: Date, end_date: Date): number;
+  compareIfBefore(start_date: Date, end_date: Date): boolean;
 }
 
 export { IDateProvider };
