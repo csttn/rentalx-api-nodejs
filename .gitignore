@@ -1,5 +1,12 @@
-node_modules
-build
+
+/node_modules
+/.pnp
+.pnp.js
+# testing
+/coverage
+
+
+/build
 npm-debug.log
 .env
 .DS_Store
