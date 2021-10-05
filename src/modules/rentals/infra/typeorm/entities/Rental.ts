@@ -3,15 +3,12 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
+  ManyToOne, PrimaryColumn,
+  UpdateDateColumn
 } from 'typeorm';
-import { Car } from '@modules/cars/infra/typeorm/entities/Car';
-import { User } from '@modules/accounts/infra/typeorm/entities/User';
-
 import { v4 as uuidV4 } from 'uuid';
+import { Car } from '../../../../cars/infra/typeorm/entities/Car';
+
 
 @Entity('rentals')
 class Rental {

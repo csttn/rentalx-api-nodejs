@@ -1,14 +1,10 @@
 import {
-  Column,
-  Entity,
-  PrimaryColumn,
-  CreateDateColumn,
-  JoinColumn,
-  ManyToOne,
+  Column, CreateDateColumn, Entity, JoinColumn,
+  ManyToOne, PrimaryColumn
 } from 'typeorm';
-
 import { v4 as uuidV4 } from 'uuid';
-import { User } from '@modules/accounts/infra/typeorm/entities/User';
+import { User } from '../entities/User';
+
 
 @Entity('users_tokens')
 class UserTokens {
