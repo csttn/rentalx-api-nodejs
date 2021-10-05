@@ -1,11 +1,14 @@
+import auth from '@config/auth';
 import { IUsersTokensRepository } from '@modules/accounts/repositories/IUsersTokensRepository';
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider';
+import { AppError } from '@shared/errors/AppError';
+import { sign, verify } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
-import { verify, sign } from 'jsonwebtoken';
-import auth from '@config/auth';
-import { AppError } from '@shared/errors/AppError';
-
+interface ITokenResponse {
+  token: string;
+  refresh_token: string;
+}
 interface IPayload {
   sub: string;
   email: string;
@@ -20,7 +23,7 @@ class RefreshTokenUseCase {
     private dateProvider: IDateProvider
   ) {}
 
-  async execute(token: string): Promise<string> {
+  async execute(token: string): Promise<ITokenResponse> {
     // informações do token e refresh token
     const {
       expires_in_refresh_token,
@@ -44,8 +47,13 @@ class RefreshTokenUseCase {
     }
 
     // se existir, o token é deletado da base
-
     await this.usersTokensRepository.deleteById(userToken.id);
+
+    //gerando novo jwt
+    const newToken = sign({}, auth.secret_token, {
+      subject: user_id,
+      expiresIn: auth.expires_in_token,
+    });
 
     // gerando novo refresh token
     const refresh_token = sign(
@@ -70,7 +78,10 @@ class RefreshTokenUseCase {
       user_id,
     });
 
-    return refresh_token;
+    return {
+      token: newToken,
+      refresh_token,
+    };
   }
 }
 
