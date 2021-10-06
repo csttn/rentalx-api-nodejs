@@ -5,16 +5,18 @@ import { UpdateUserAvatarController } from '@modules/accounts/useCases/updateUse
 import { Router } from 'express';
 import multer from 'multer';
 
-
-
 const uploadAvatar = multer(uploadConfig);
 
 const userRoutes = Router();
 
 const createUserController = new CreateUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
+// const profileUserController = new ProfileUserController();
+
 
 userRoutes.post('/', createUserController.handle);
+
+// userRoutes.get('/', ensureAuthenticated, profileUserController.handle);
 
 userRoutes.patch(
   '/avatar',
