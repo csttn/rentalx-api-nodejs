@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import "dotenv/config"
 import express, { Request, Response, NextFunction } from 'express';
 
 //biblioteca do express para trataemnto de erros
