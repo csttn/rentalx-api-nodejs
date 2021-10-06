@@ -1,13 +1,13 @@
-import multer from 'multer';
 import uploadConfig from '@config/upload';
-import { Router } from 'express';
 import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
-import { ensureAdmin } from '../middlewares/ensureAdmin';
 import { CreateCarController } from '@modules/cars/useCases/createCar/CreateCarController';
-import { ListAvailableCarsController } from '@modules/cars/useCases/listAvailableCars/ListAvailableCarsController';
 import { CreateCarSpecificationCarController } from '@modules/cars/useCases/createCarSpeficification/CreateSpecificationCarController';
-import { UploadCarImagesController } from '@modules/cars/useCases/uploadCarImages/UploadCarImagesController';
 import { DeleteCarImageController } from '@modules/cars/useCases/deleteCarImage/DeleteCarImageController';
+import { ListAvailableCarsController } from '@modules/cars/useCases/listAvailableCars/ListAvailableCarsController';
+import { UploadCarImagesController } from '@modules/cars/useCases/uploadCarImages/UploadCarImagesController';
+import { Router } from 'express';
+import multer from 'multer';
+import { ensureAdmin } from '../middlewares/ensureAdmin';
 
 const carsRoutes = Router();
 
@@ -17,7 +17,7 @@ const createCarSpecificationController = new CreateCarSpecificationCarController
 const uploadCarImageController = new UploadCarImagesController();
 const deleteCarsImageController = new DeleteCarImageController();
 
-const upload = multer(uploadConfig.upload('./tmp/cars'));
+const upload = multer(uploadConfig);
 
 carsRoutes.post(
   '/',
