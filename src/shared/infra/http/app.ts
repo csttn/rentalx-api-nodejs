@@ -1,3 +1,4 @@
+import  uploadConfig from '@config/upload';
 import 'reflect-metadata';
 import "dotenv/config"
 import express, { Request, Response, NextFunction } from 'express';
@@ -30,6 +31,10 @@ app.use(express.json());
 
 //criando rota de documentação
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+app.use("/avatar", express.static(`${uploadConfig.tmpFolder}/avatar`))
+app.use("/cars", express.static(`${uploadConfig.tmpFolder}/cars`))
+
 
 //atribuindo rotas de recursos da aplicação
 app.use(router);

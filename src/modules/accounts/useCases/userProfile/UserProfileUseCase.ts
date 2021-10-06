@@ -1,6 +1,8 @@
 import { User } from '@modules/accounts/infra/typeorm/entities/User';
 import { inject, injectable } from 'tsyringe';
 import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
+import { UserMap } from '@modules/accounts/mappers/UserMap';
+import { IUserResponseDTO } from '@modules/accounts/dtos/IUserResponseDTO';
 
 @injectable()
 class UserProfileUseCase {
@@ -8,10 +10,10 @@ class UserProfileUseCase {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository
   ) {}
-  async execute(id: string): Promise<User> {
+  async execute(id: string): Promise<IUserResponseDTO> {
     const user = await this.usersRepository.findById(id);
 
-    return user;
+    return UserMap.toDto(user);
   }
 }
 
