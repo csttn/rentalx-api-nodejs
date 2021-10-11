@@ -10,7 +10,6 @@ class UserProfileController {
 
     const user = await userProfileUseCase.execute(id);
 
-    console.log(user);
     return response.json(user);
   }
 }
