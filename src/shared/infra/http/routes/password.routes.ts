@@ -4,6 +4,8 @@ import { Router } from 'express';
 
 const passwordRoutes = Router();
 
+
+
 const sendForgotPasswordMailController = new SendForgotPasswordMailController();
 
 const resetPasswordController = new ResetPasswordController();
