@@ -7,7 +7,11 @@ coverage
 
 .vscode
 
-tmp/
+tmp/*
+
+# Vai forçar a subida da pasta tmp para o github, porém sem o conteudo
+!tmp/ .gitkeep
+
 dist
 build
 npm-debug.log
