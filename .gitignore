@@ -12,6 +12,7 @@ tmp/*
 # Vai forçar a subida da pasta tmp para o github, porém sem o conteudo
 !tmp/.gitkeep
 
+ormconfig.json
 dist
 build
 npm-debug.log
