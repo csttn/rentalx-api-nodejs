@@ -10,7 +10,7 @@ coverage
 tmp/*
 
 # Vai forçar a subida da pasta tmp para o github, porém sem o conteudo
-!tmp/ .gitkeep
+!tmp/.gitkeep
 
 dist
 build
