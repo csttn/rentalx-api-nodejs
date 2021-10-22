@@ -5,7 +5,7 @@
 # testing
 /coverage
 
-
+/dist
 /build
 npm-debug.log
 .env
